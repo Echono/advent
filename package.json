@@ -1,0 +1,24 @@
+{
+  "name": "advent",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "dependencies": {
+    "@sap/cds": "^9",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^2",
+    "@cap-js/cds-types": "^0.14.0",
+    "@types/node": "^22.0.0",
+    "tsx": "^4",
+    "typescript": "^5",
+    "@cap-js/cds-typer": ">=0.1"
+  },
+  "scripts": {
+    "start": "cds-serve"
+  },
+  "private": true,
+  "imports": {
+    "#cds-models/*": "./@cds-models/*/index.js"
+  }
+}
