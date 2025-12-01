@@ -4,6 +4,8 @@ This repos sole purpose is hobby coding while still respecting what I work with 
 
 You can find more here: https://cap.cloud.sap/docs/
 
-The solutions for the code will be store in the individual years of controllers while the srv provides callable functions.
+The solutions for the code will be stored in the individual years of controllers while the srv provides callable functions.
+
+**Please look at this code at your own risk as this will spoil the puzzle**
 
 If you'd like to try to execute this code yourself, I suggest creating a http folder that provides your inputs and calls the endpoints.
