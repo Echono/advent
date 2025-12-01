@@ -1,25 +1,9 @@
-# Getting Started
+# Introduction
+Welcome to my solutions of advent of code.
+This repos sole purpose is hobby coding while still respecting what I work with at a daily basis, which is why this repo makes use of the SAP CAP standards and uses the CAP runtime to execute the solutions.
 
-Welcome to your new project.
+You can find more here: https://cap.cloud.sap/docs/
 
-It contains these folders and files, following our recommended project layout:
+The solutions for the code will be store in the individual years of controllers while the srv provides callable functions.
 
-File or Folder | Purpose
----------|----------
-`app/` | content for UI frontends goes here
-`db/` | your domain models and data go here
-`srv/` | your service models and code go here
-`package.json` | project metadata and configuration
-`readme.md` | this getting started guide
-
-
-## Next Steps
-
-- Open a new terminal and run `cds watch`
-- (in VS Code simply choose _**Terminal** > Run Task > cds watch_)
-- Start adding content, for example, a [db/schema.cds](db/schema.cds).
-
-
-## Learn More
-
-Learn more at https://cap.cloud.sap/docs/get-started/.
+If you'd like to try to execute this code yourself, I suggest creating a http folder that provides your inputs and calls the endpoints.
