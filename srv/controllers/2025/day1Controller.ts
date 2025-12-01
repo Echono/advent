@@ -10,6 +10,10 @@ type recursionResult = {
     recursed: number
 }
 
+/* ########################## */
+/* ######### PART 1 ######### */
+/* ########################## */
+
 export class pt1Day1Controller {
     public static main: OnEventHandler = async (req: Request): Promise<string> => {
 
@@ -58,6 +62,10 @@ export class pt1Day1Controller {
     }
 
 }
+
+/* ########################## */
+/* ######### PART 2 ######### */
+/* ########################## */
 
 export class pt2Day1Controller {
 
