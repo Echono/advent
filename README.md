@@ -4,7 +4,9 @@ This repos sole purpose is hobby coding while still respecting what I work with 
 
 You can find more here: https://cap.cloud.sap/docs/
 
-The solutions for the code will be stored in the individual years of controllers while the srv provides callable functions.
+The solutions for the code will be stored in the individual years of controller folders located in the srv folder.
+
+The srv files will provide the service which has callable endpoints that takes in your input.
 
 **Please look at this code at your own risk as this will spoil the puzzle**
 
