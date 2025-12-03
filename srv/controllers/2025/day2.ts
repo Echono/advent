@@ -1,5 +1,9 @@
 import { OnEventHandler, Request } from "@sap/cds";
 
+/* ########################## */
+/* ######### PART 1 ######### */
+/* ########################## */
+
 export class pt1Day2Controller {
     public static main: OnEventHandler = async (req: Request): Promise<void> => {
         
@@ -41,6 +45,10 @@ export class pt1Day2Controller {
         req.reply(result.toString());
     }
 }
+
+/* ########################## */
+/* ######### PART 2 ######### */
+/* ########################## */
 
 export class pt2Day2Controller {
     public static main: OnEventHandler = async (req: Request): Promise<void> => {

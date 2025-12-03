@@ -2,6 +2,10 @@ import { OnEventHandler, Request } from "@sap/cds";
 
 type BatteryIndex = {index: number, value: number};
 
+/* ########################## */
+/* ######### PART 1 ######### */
+/* ########################## */
+
 export class pt1Day3Controller {
     public static main: OnEventHandler = async (req: Request): Promise<void> => {
         
@@ -38,6 +42,10 @@ export class pt1Day3Controller {
         req.reply(result.toString());
     }
 }
+
+/* ########################## */
+/* ######### PART 2 ######### */
+/* ########################## */
 
 export class pt2Day3Controller {
     public static main: OnEventHandler = async (req: Request): Promise<void> => {
