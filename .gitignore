@@ -9,6 +9,7 @@ gen/
 node_modules/
 target/
 http/
+inputs/
 
 # Web IDE, App Studio
 .che/
