@@ -38,7 +38,7 @@ export class pt1Day2Controller {
             })
         });
 
-        req.reply(result);
+        req.reply(result.toString());
     }
 }
 
@@ -78,7 +78,7 @@ export class pt2Day2Controller {
             })
         });
 
-        req.reply(result);
+        req.reply(result.toString());
 
     }
 }

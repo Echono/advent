@@ -15,7 +15,7 @@ type recursionResult = {
 /* ########################## */
 
 export class pt1Day1Controller {
-    public static main: OnEventHandler = async (req: Request): Promise<string> => {
+    public static main: OnEventHandler = async (req: Request): Promise<void> => {
 
         const { input } = req.data;
 
@@ -39,7 +39,7 @@ export class pt1Day1Controller {
 
         }
 
-        return count.toString();
+        req.reply(count.toString());
 
     }
 
@@ -69,7 +69,7 @@ export class pt1Day1Controller {
 
 export class pt2Day1Controller {
 
-    public static main: OnEventHandler = async (req: Request): Promise<string> => {
+    public static main: OnEventHandler = async (req: Request): Promise<void> => {
 
         const { input } = req.data;
 
@@ -94,7 +94,7 @@ export class pt2Day1Controller {
 
         }
 
-        return count.toString();
+        req.reply(count.toString());
 
     }
 
