@@ -7,12 +7,16 @@
     "express": "^4"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^2",
+    "@cap-js/cds-test": "^0.4.1",
+    "@cap-js/cds-typer": ">=0.1",
     "@cap-js/cds-types": "^0.14.0",
+    "@cap-js/sqlite": "^2",
+    "@types/jest": "^30.0.0",
     "@types/node": "^22.0.0",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.6",
     "tsx": "^4",
-    "typescript": "^5",
-    "@cap-js/cds-typer": ">=0.1"
+    "typescript": "^5.9.3"
   },
   "scripts": {
     "start": "cds-serve"
