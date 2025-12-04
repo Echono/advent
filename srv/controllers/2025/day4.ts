@@ -255,8 +255,8 @@ export function createGridMap(workload: string[]): GridMap {
         for (let x = 0; x < row.length; x++) {
             const cell: GridCell = {
                 topWall: (i === 0),
-                rightWall: (x === row.length -1),
-                bottomWall: (i === workload.length -1),
+                rightWall: (x === row.length - 1),
+                bottomWall: (i === workload.length - 1),
                 leftWall: (x === 0),
                 row: i,
                 col: x,
@@ -276,18 +276,18 @@ export function getNumberOfSurroundingPapers(cell: GridCell, grid: GridMap): num
 
     // Check above
     if(!cell.topWall) {
-        const aboveCell = grid.get(createKey(cell.row -1, cell.col));
+        const aboveCell = grid.get(createKey(cell.row - 1, cell.col));
         if(aboveCell!.value === Cell.paper) {
             total++;
         }
         if(!aboveCell!.leftWall) {
-            const aboveLeftCell = grid.get(createKey(cell.row -1, cell.col -1));
+            const aboveLeftCell = grid.get(createKey(aboveCell!.row, aboveCell!.col - 1));
             if(aboveLeftCell!.value === Cell.paper) {
                 total++;
             }
         }
         if(!aboveCell!.rightWall) {
-            const aboveRightCell = grid.get(createKey(cell.row -1, cell.col +1));
+            const aboveRightCell = grid.get(createKey(aboveCell!.row, aboveCell!.col + 1));
             if(aboveRightCell!.value === Cell.paper) {
                 total++;
             }
@@ -312,18 +312,18 @@ export function getNumberOfSurroundingPapers(cell: GridCell, grid: GridMap): num
     
     // Check below
     if(!cell.bottomWall) {
-        const belowCell = grid.get(createKey(cell.row +1, cell.col));
+        const belowCell = grid.get(createKey(cell.row + 1, cell.col));
         if(belowCell!.value === Cell.paper) {
             total++;
         }
         if(!belowCell!.leftWall) {
-            const belowLeftCell = grid.get(createKey(cell.row +1, cell.col -1));
+            const belowLeftCell = grid.get(createKey(belowCell!.row, belowCell!.col - 1));
             if(belowLeftCell!.value === Cell.paper) {
                 total++;
             }
         }
         if(!belowCell!.rightWall) {
-            const belowRightCell = grid.get(createKey(cell.row +1, cell.col +1));
+            const belowRightCell = grid.get(createKey(belowCell!.row, belowCell!.col + 1));
             if(belowRightCell!.value === Cell.paper) {
                 total++;
             }
