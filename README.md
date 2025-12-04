@@ -11,3 +11,5 @@ The srv files will provide the service which has callable endpoints that takes i
 __**Please look at this code at your own risk as this will spoil the puzzle**__
 
 If you'd like to try to execute this code yourself, I suggest creating a http folder that provides your inputs and calls the endpoints.
+
+Beware of changes to the code. As of writing this, day 1 - 2 are manually accessed and you need to convert your input and send it with a request to access the function while day 3 and onwards takes in a filename looking in a "2025" folder located in a "inputs" which should be located in root. (This is subject to change with a UI in the future)
