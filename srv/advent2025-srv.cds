@@ -18,4 +18,10 @@ service advent2025 {
     action day3pt1(input: String) returns String;
     action day3pt2(input: String) returns String;
 
+    /* ######################### */
+    /* ######### DAY 3 ######### */
+    /* ######################### */
+    action day4pt1(input: String) returns String;
+    action day4pt2(input: String) returns String;
+
 }

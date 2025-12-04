@@ -97,9 +97,9 @@ describe('Test of day 3 code', () => {
         const service = await cds.connect.to('advent2025');
         const result = await service.send('day3pt2', {input: "987654321111111"});
         const expectedResult = "987654321111";
-
+        
         expect(result).toBe(expectedResult);
-    
+        
     })
 
     it('should run part 2 with second line of example to test limit logic', async () => {
