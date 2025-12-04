@@ -1,13 +1,6 @@
 import { OnEventHandler, Request } from "@sap/cds";
 import { parseFileToString } from "../../util/parser";
 
-type CoordinateKey = `${number}::${number}`;
-type Grid = Map<CoordinateKey, string>
-type GridCompilation = {
-    papers: Grid,
-    complete: Grid
-}
-
 enum Cell {
     paper = '@',
     empty = '.'
@@ -16,6 +9,13 @@ enum Cell {
 /* ########################## */
 /* ######### PART 1 ######### */
 /* ########################## */
+
+type CoordinateKey = `${number}::${number}`;
+type Grid = Map<CoordinateKey, string>
+type GridCompilation = {
+    papers: Grid,
+    complete: Grid
+}
 
 export class pt1Day4Controller {
     public static main: OnEventHandler = async (req: Request): Promise<void> => {
@@ -117,20 +117,6 @@ export class pt1Day4Controller {
 
 }
 
-/* ########################## */
-/* ######### PART 2 ######### */
-/* ########################## */
-
-export class pt2Day4Controller {
-    public static main: OnEventHandler = async (req: Request): Promise<void> => {
-
-        const { input } = req.data;
-        const workload = (input as string).split("\n");
-        let result = 0;
-
-    }
-}
-
 /* ########################### */
 /* ######### HELPERS ######### */
 /* ########################### */
@@ -158,4 +144,191 @@ export function createMaps(workload: string[]): GridCompilation {
         papers: paperGrid,
         complete: completeGrid
     };
+}
+
+/* ########################## */
+/* ######### PART 2 ######### */
+/* ########################## */
+
+type GridCell = {
+    topWall: boolean,
+    rightWall: boolean,
+    bottomWall: boolean,
+    leftWall: boolean
+    row: number,
+    col: number,
+    value: Cell,
+    markedForDeletion: boolean
+}
+
+type GridMap = Map<CoordinateKey, GridCell>;
+
+type LoopResult = {
+    validCells: number,
+    fullGrid: GridMap
+}
+
+enum FilterType {
+    paper,
+    marked
+}
+
+export class pt2Day4Controller {
+    public static main: OnEventHandler = async (req: Request): Promise<void> => {
+        const { fileName } = req.data;
+        const input = parseFileToString(__dirname + '/../../../inputs/2025/' + fileName);
+        const workload = (input as string).split("\n");
+        let result = 0;
+        let changes = true;
+
+        let grid = createGridMap(workload);
+        let workGrid: GridMap = filterMap(grid, FilterType.paper);
+
+        while(changes) {
+            const loopResult = loop(workGrid, grid);
+            if(loopResult.validCells === 0) {
+                changes = false;
+            } else {
+                result += loopResult.validCells;
+                grid = loopResult.fullGrid;
+                for(const [key] of filterMap(grid, FilterType.marked)) {
+                    grid.get(key)!.value = Cell.empty;
+                }
+                workGrid = filterMap(grid, FilterType.paper);
+            }
+        }
+
+        req.reply(result.toString());
+    }
+}
+
+/* ########################### */
+/* ######### HELPERS ######### */
+/* ########################### */
+
+export function loop(workGrid: GridMap, fullGrid: GridMap): LoopResult {
+
+    const result = {
+        validCells: 0,
+        fullGrid: fullGrid
+    } as LoopResult;
+
+    for(const [key, cell] of workGrid) {
+        const surroundingPapers = getNumberOfSurroundingPapers(cell, fullGrid);
+        if(surroundingPapers < 4) {
+            result.validCells++;
+            result.fullGrid.get(key)!.markedForDeletion = true;
+        }
+    }
+
+    return result;
+
+}
+
+export function filterMap(grid: GridMap, type: FilterType): GridMap {
+    const filtered: GridMap = new Map<CoordinateKey, GridCell>();
+    switch(type) {
+        case FilterType.marked:
+            for(const [key, cell] of grid) {
+                if(cell.markedForDeletion) {
+                    filtered.set(key, cell);
+                }
+            }
+            break;
+        case FilterType.paper:
+            for(const [key, cell] of grid) {
+                if(cell.value === Cell.paper) {
+                    filtered.set(key, cell);
+                }
+            }
+            break;
+    }
+    return filtered;
+}
+
+export function createGridMap(workload: string[]): GridMap {
+
+    const map: GridMap = new Map<CoordinateKey, GridCell>();
+
+    for (let i = 0; i < workload.length; i++) {
+        const row = workload[i].split("");
+        for (let x = 0; x < row.length; x++) {
+            const cell: GridCell = {
+                topWall: (i === 0),
+                rightWall: (x === row.length -1),
+                bottomWall: (i === workload.length -1),
+                leftWall: (x === 0),
+                row: i,
+                col: x,
+                value: row[x] as Cell,
+                markedForDeletion: false
+            };
+            map.set(createKey(i, x), cell);
+        }
+    }
+
+    return map;
+    
+}
+
+export function getNumberOfSurroundingPapers(cell: GridCell, grid: GridMap): number {
+    let total = 0;
+
+    // Check above
+    if(!cell.topWall) {
+        const aboveCell = grid.get(createKey(cell.row -1, cell.col));
+        if(aboveCell!.value === Cell.paper) {
+            total++;
+        }
+        if(!aboveCell!.leftWall) {
+            const aboveLeftCell = grid.get(createKey(cell.row -1, cell.col -1));
+            if(aboveLeftCell!.value === Cell.paper) {
+                total++;
+            }
+        }
+        if(!aboveCell!.rightWall) {
+            const aboveRightCell = grid.get(createKey(cell.row -1, cell.col +1));
+            if(aboveRightCell!.value === Cell.paper) {
+                total++;
+            }
+        }
+    }
+
+    // Check left
+    if(!cell.leftWall) {
+        const leftCell = grid.get(createKey(cell.row, cell.col -1));
+        if(leftCell!.value === Cell.paper) {
+            total++;
+        }
+    }
+
+    // Check right
+    if(!cell.rightWall) {
+        const rightCell = grid.get(createKey(cell.row, cell.col +1));
+        if(rightCell!.value === Cell.paper) {
+            total++;
+        }
+    }
+    
+    // Check below
+    if(!cell.bottomWall) {
+        const belowCell = grid.get(createKey(cell.row +1, cell.col));
+        if(belowCell!.value === Cell.paper) {
+            total++;
+        }
+        if(!belowCell!.leftWall) {
+            const belowLeftCell = grid.get(createKey(cell.row +1, cell.col -1));
+            if(belowLeftCell!.value === Cell.paper) {
+                total++;
+            }
+        }
+        if(!belowCell!.rightWall) {
+            const belowRightCell = grid.get(createKey(cell.row +1, cell.col +1));
+            if(belowRightCell!.value === Cell.paper) {
+                total++;
+            }
+        }
+    }
+
+    return total;
 }

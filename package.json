@@ -19,7 +19,8 @@
     "typescript": "^5.9.3"
   },
   "scripts": {
-    "start": "cds-serve"
+    "start": "cds-serve",
+    "test": "jest --watchAll"
   },
   "private": true,
   "imports": {

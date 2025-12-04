@@ -174,4 +174,11 @@ describe('Test of day 4 code', () => {
         expect(key).toBe('2::6');
     })
 
+    it('should run part 2 action and loop through the input removing rolls until no more rolls are removeable', async () => {
+        const service = await cds.connect.to('advent2025');
+        const result = await service.send('day4pt2', {fileName: example});
+        const expectedResult = "43";
+        expect(result).toBe(expectedResult);
+    })
+
 });
