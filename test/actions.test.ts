@@ -1,7 +1,7 @@
 import { day1pt1 } from '#cds-models/advent2025';
 import cds from '@sap/cds';
 import { parseFileToString } from '../srv/util/parser';
-import { createKey, createMaps } from '../srv/controllers/2025/day4';
+import { createGridMap, createKey, createMaps, filterMap, FilterType, getNumberOfSurroundingPapers, loop } from '../srv/controllers/2025/day4';
 
 cds.test(__dirname + '/..');
 
@@ -162,22 +162,57 @@ describe('Test of day 4 code', () => {
     
     });
 
-    it('should run helper function that creates the grids and return the correct amount grids using the example data    ', () => {
+    it('should run helper function that creates the grids and return the correct amount grids using the example data', () => {
         const workload = exampleData.split("\n");
         const grids = createMaps(workload);
         expect(grids.papers.size).toBe(71);
         expect(grids.complete.size).toBe(100);
     })
-
+    
     it('should run helper function that creates the keys and return the correct key format', () => {
         const key = createKey(2, 6);
         expect(key).toBe('2::6');
     })
-
+    
     it('should run part 2 action and loop through the input removing rolls until no more rolls are removeable', async () => {
         const service = await cds.connect.to('advent2025');
         const result = await service.send('day4pt2', {fileName: example});
         const expectedResult = "43";
+        expect(result).toBe(expectedResult);
+    })
+
+    it('should run helper function that filters a grid map and returns a new map that only contains paper cells', () => {
+        const workload = exampleData.split("\n");
+        const map = createGridMap(workload);
+        const filtered = filterMap(map, FilterType.paper);
+        expect(filtered.size).toBe(71);
+    })
+
+    it('should run helper function that filters a grid map and returns a new map that only contains marked', () => {
+        const workload = exampleData.split("\n");
+        const map = createGridMap(workload);
+        map.get(createKey(0, 0))!.markedForDeletion = true;
+        map.get(createKey(1, 1))!.markedForDeletion = true;
+        map.get(createKey(2, 2))!.markedForDeletion = true;
+        const filtered = filterMap(map, FilterType.marked);
+        expect(filtered.size).toBe(3);
+    })
+
+    it('should run helper function that loops through a work grid and mark valid cells for deletion as well as counting that amount', () => {
+        const workload = exampleData.split("\n");
+        const map = createGridMap(workload);
+        const workGrid = filterMap(map, FilterType.paper);
+        const result = loop(workGrid, map);
+        const expectedValidCells = 13;
+        expect(result.validCells).toBe(expectedValidCells);
+    })
+    
+    it('should run helper function that finds surrounding papers of a specific cell and return that amount', () => {
+        const workload = exampleData.split("\n");
+        const map = createGridMap(workload);
+        const cell = map.get(createKey(1, 4));
+        const result = getNumberOfSurroundingPapers(cell!, map);
+        const expectedResult = 4;
         expect(result).toBe(expectedResult);
     })
 

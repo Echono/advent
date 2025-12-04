@@ -168,7 +168,7 @@ type LoopResult = {
     fullGrid: GridMap
 }
 
-enum FilterType {
+export enum FilterType {
     paper,
     marked
 }
