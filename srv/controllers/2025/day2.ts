@@ -1,4 +1,5 @@
 import { OnEventHandler, Request } from "@sap/cds";
+import { TrackPerformance } from "../../util/performer";
 
 /* ########################## */
 /* ######### PART 1 ######### */
@@ -7,6 +8,8 @@ import { OnEventHandler, Request } from "@sap/cds";
 export class pt1Day2Controller {
     public static main: OnEventHandler = async (req: Request): Promise<void> => {
         
+        const timer = new TrackPerformance(true, "Day 2, Part 1");
+
         const { input } = req.data;
         
         const workload = ( input as string ).split(",").map( str => str.split("-"));
@@ -42,6 +45,8 @@ export class pt1Day2Controller {
             })
         });
 
+        timer.end();
+
         req.reply(result.toString());
     }
 }
@@ -53,6 +58,8 @@ export class pt1Day2Controller {
 export class pt2Day2Controller {
     public static main: OnEventHandler = async (req: Request): Promise<void> => {
         
+        const timer = new TrackPerformance(true, "Day 2, Part 2");
+
         const { input } = req.data;
 
         const workload = ( input as string ).split(",").map( str => str.split("-"));
@@ -85,6 +92,8 @@ export class pt2Day2Controller {
                 }
             })
         });
+
+        timer.end();
 
         req.reply(result.toString());
 

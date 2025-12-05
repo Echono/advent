@@ -1,4 +1,5 @@
 import { OnEventHandler, Request } from "@sap/cds";
+import { TrackPerformance } from "../../util/performer";
 
 type BatteryIndex = {index: number, value: number};
 
@@ -8,6 +9,8 @@ type BatteryIndex = {index: number, value: number};
 
 export class pt1Day3Controller {
     public static main: OnEventHandler = async (req: Request): Promise<void> => {
+
+        const timer = new TrackPerformance(true, "Day 3, Part 1");
         
         const { input } = req.data;
         
@@ -39,6 +42,8 @@ export class pt1Day3Controller {
 
         }
 
+        timer.end();
+
         req.reply(result.toString());
     }
 }
@@ -50,6 +55,8 @@ export class pt1Day3Controller {
 export class pt2Day3Controller {
     public static main: OnEventHandler = async (req: Request): Promise<void> => {
         
+        const timer = new TrackPerformance(true, "Day 3, Part 2");
+
         const { input } = req.data;
         const workload = ( input as string ).split("\n");
         let result = 0;
@@ -71,6 +78,8 @@ export class pt2Day3Controller {
             result += parseInt(jolt);
 
         }
+
+        timer.end();
 
         req.reply(result.toString());
 

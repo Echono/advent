@@ -1,4 +1,5 @@
 import { OnEventHandler, Request } from "@sap/cds";
+import { TrackPerformance } from "../../util/performer";
 
 enum directions {
     subtract = "L",
@@ -16,6 +17,8 @@ type recursionResult = {
 
 export class pt1Day1Controller {
     public static main: OnEventHandler = async (req: Request): Promise<void> => {
+
+        const timer = new TrackPerformance(true, "Day 1, Part 1");
 
         const { input } = req.data;
 
@@ -38,6 +41,8 @@ export class pt1Day1Controller {
             }
 
         }
+
+        timer.end();
 
         req.reply(count.toString());
 
@@ -71,6 +76,8 @@ export class pt2Day1Controller {
 
     public static main: OnEventHandler = async (req: Request): Promise<void> => {
 
+        const timer = new TrackPerformance(true, "Day 1, Part 2");
+
         const { input } = req.data;
 
         const workload = ( input as string ).split("\n");
@@ -93,6 +100,8 @@ export class pt2Day1Controller {
             }
 
         }
+
+        timer.end();
 
         req.reply(count.toString());
 

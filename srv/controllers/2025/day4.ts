@@ -1,5 +1,6 @@
 import { OnEventHandler, Request } from "@sap/cds";
 import { parseFileToString } from "../../util/parser";
+import { TrackPerformance } from "../../util/performer";
 
 enum Cell {
     paper = '@',
@@ -19,6 +20,8 @@ type GridCompilation = {
 
 export class pt1Day4Controller {
     public static main: OnEventHandler = async (req: Request): Promise<void> => {
+
+        const timer = new TrackPerformance(true, "Day 4, Part 1");
 
         const { fileName } = req.data;
 
@@ -111,6 +114,8 @@ export class pt1Day4Controller {
 
         }
 
+        timer.end();
+
         req.reply(result.toString());
 
     }
@@ -175,6 +180,9 @@ export enum FilterType {
 
 export class pt2Day4Controller {
     public static main: OnEventHandler = async (req: Request): Promise<void> => {
+
+        const timer = new TrackPerformance(true, "Day 4, Part 2");
+
         const { fileName } = req.data;
         const input = parseFileToString(__dirname + '/../../../inputs/2025/' + fileName);
         const workload = (input as string).split("\n");
@@ -197,6 +205,8 @@ export class pt2Day4Controller {
                 workGrid = filterMap(grid, FilterType.paper);
             }
         }
+
+        timer.end();
 
         req.reply(result.toString());
     }
