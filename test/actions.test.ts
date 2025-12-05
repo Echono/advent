@@ -2,6 +2,7 @@ import { day1pt1 } from '#cds-models/advent2025';
 import cds from '@sap/cds';
 import { parseFileToString } from '../srv/util/parser';
 import { createGridMap, createKey, createMaps, filterMap, FilterType, getNumberOfSurroundingPapers, loop } from '../srv/controllers/2025/day4';
+import { parseData } from '../srv/controllers/2025/day5';
 
 cds.test(__dirname + '/..');
 
@@ -217,3 +218,41 @@ describe('Test of day 4 code', () => {
     })
 
 });
+
+describe('Test of day 5 code', () => {
+
+    it('should parse the example input file', () => {
+
+        const fileName = 'day5example.txt';
+        const parsedData = parseData(fileName);
+        const { ranges, ids } = parsedData;
+
+        const expectedRanges = [
+            { min: 3, max: 5 },
+            { min: 10, max: 20 }
+        ]
+        const expectedIds = [1, 5, 8, 11, 17, 32];
+
+        expect(ranges.length).toBe(expectedRanges.length);
+        expect(ids.length).toBe(expectedIds.length);
+
+        const randomRangeIndex = Math.floor(Math.random() * (expectedRanges.length)) + 0;
+        const randomIdsIndex = Math.floor(Math.random() * (expectedIds.length)) + 0;
+
+        expect(ranges[randomRangeIndex].min).toBe(expectedRanges[randomRangeIndex].min);
+        expect(ranges[randomRangeIndex].max).toBe(expectedRanges[randomRangeIndex].max);
+        expect(ids[randomIdsIndex]).toBe(expectedIds[randomIdsIndex]);
+
+    })
+
+    it('should run part 1 action and return expected data using the example input', async () => {
+        
+        const service = await cds.connect.to('advent2025');
+        const result = await service.send('day5pt1', {fileName: 'day5example.txt'});
+        const expectedResult = "3";
+
+        expect(result).toBe(expectedResult);
+
+    })
+
+})

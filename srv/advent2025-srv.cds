@@ -19,9 +19,15 @@ service advent2025 {
     action day3pt2(input: String) returns String;
 
     /* ######################### */
-    /* ######### DAY 3 ######### */
+    /* ######### DAY 4 ######### */
     /* ######################### */
     action day4pt1(fileName: String) returns String;
     action day4pt2(fileName: String) returns String;
+
+    /* ######################### */
+    /* ######### DAY 5 ######### */
+    /* ######################### */
+    action day5pt1(fileName: String) returns String;
+    action day5pt2(fileName: String) returns String;
 
 }
