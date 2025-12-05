@@ -1,5 +1,6 @@
 import { OnEventHandler, Request } from "@sap/cds";
 import { parseFileToString } from "../../util/parser";
+import { TrackPerformance } from "../../util/performer";
 
 type IDRange = {
     min: number,
@@ -18,6 +19,8 @@ type ParsedData = {
 export class pt1Day5Controller {
     public static main: OnEventHandler = async (req: Request): Promise<void> => {
         
+        const timer = new TrackPerformance(true, "Day 5, Part 1");
+
         const { fileName } = req.data;
         const workload = parseData(fileName);
         let result = 0;
@@ -28,6 +31,8 @@ export class pt1Day5Controller {
                 result++;
             }
         }
+
+        timer.end();
 
         req.reply(result.toString());   
 
@@ -85,6 +90,8 @@ export function recursiveCheck(ranges: IDRange[], id: number): boolean {
 export class pt2Day5Controller {
     public static main: OnEventHandler = async (req: Request): Promise<void> => {
         
+        const timer = new TrackPerformance(true, "Day 5, Part 2");
+
         const { fileName } = req.data;
         const workload = parseData(fileName);
         let result = 0;
@@ -92,6 +99,8 @@ export class pt2Day5Controller {
         for(const range of workload.ranges) {
             result += range.max - range.min + 1;
         }
+
+        timer.end();
 
         req.reply(result.toString());
 
