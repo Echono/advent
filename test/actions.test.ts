@@ -246,13 +246,18 @@ describe('Test of day 5 code', () => {
     })
 
     it('should run part 1 action and return expected data using the example input', async () => {
-        
         const service = await cds.connect.to('advent2025');
         const result = await service.send('day5pt1', {fileName: 'day5example.txt'});
         const expectedResult = "3";
-
         expect(result).toBe(expectedResult);
 
+    })
+
+    it('should run part 2 action and return amount of fresh ingredients which is resolved by checking all the numbers within a range', async () => {
+        const service = await cds.connect.to('advent2025');
+        const result = await service.send('day5pt2', {fileName: 'day5example.txt'});
+        const expectedResult = "14";
+        expect(result).toBe(expectedResult);
     })
 
 })

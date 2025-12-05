@@ -68,7 +68,7 @@ export function recursiveCheck(ranges: IDRange[], id: number): boolean {
     }
 
     // check left side
-    if(!result && id < checkRange.max) {
+    if(!result && id < checkRange.min) {
         const leftSide = ranges.slice(0, midPoint);
         if(leftSide.length > 0) {
             result = recursiveCheck(leftSide, id);
@@ -87,6 +87,13 @@ export class pt2Day5Controller {
         
         const { fileName } = req.data;
         const workload = parseData(fileName);
+        let result = 0;
+
+        for(const range of workload.ranges) {
+            result += range.max - range.min + 1;
+        }
+
+        req.reply(result.toString());
 
     }
 }
