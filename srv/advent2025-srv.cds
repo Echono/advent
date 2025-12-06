@@ -30,4 +30,10 @@ service advent2025 {
     action day5pt1(fileName: String) returns String;
     action day5pt2(fileName: String) returns String;
 
+    /* ######################### */
+    /* ######### DAY 6 ######### */
+    /* ######################### */
+    action day6pt1(fileName: String) returns String;
+    action day6pt2(fileName: String) returns String;
+
 }
