@@ -236,8 +236,8 @@ describe('Test of day 5 code', () => {
         expect(ranges.length).toBe(expectedRanges.length);
         expect(ids.length).toBe(expectedIds.length);
 
-        const randomRangeIndex = Math.floor(Math.random() * (expectedRanges.length)) + 0;
-        const randomIdsIndex = Math.floor(Math.random() * (expectedIds.length)) + 0;
+        const randomRangeIndex = Math.floor(Math.random() * (expectedRanges.length));
+        const randomIdsIndex = Math.floor(Math.random() * (expectedIds.length));
 
         expect(ranges[randomRangeIndex].min).toBe(expectedRanges[randomRangeIndex].min);
         expect(ranges[randomRangeIndex].max).toBe(expectedRanges[randomRangeIndex].max);
@@ -261,3 +261,28 @@ describe('Test of day 5 code', () => {
     })
 
 })
+
+describe('Test of day 6 code', () => {
+
+    it('should run part 1 action and return accumelated numbers using the operator in the bottom of each line', async () => {
+        const service = await cds.connect.to('advent2025');
+        const result = await service.send('day6pt1', {fileName: 'day6example.txt'});
+        const expectedResult = "4277556";
+        expect(result).toBe(expectedResult);
+    });
+   
+    it('should run part 1 action and return accumelated numbers using the operator in the bottom of each line using some of my input mixed with the original example', async () => {
+        const service = await cds.connect.to('advent2025');
+        const result = await service.send('day6pt1', {fileName: 'day6example2.txt'});
+        const expectedResult = "14763111";
+        expect(result).toBe(expectedResult);
+    });
+   
+    it('should run part 2 action and return accumelated numbers using the operator in the bottom of each line where the numbers are column seperated within the column', async () => {
+        const service = await cds.connect.to('advent2025');
+        const result = await service.send('day6pt2', {fileName: 'day6example.txt'});
+        const expectedResult = "3263827";
+        expect(result).toBe(expectedResult);
+    });
+
+});
