@@ -16,11 +16,12 @@ export class pt1Day7Controller {
         let beams: number[] = [];
         beams.push(workload.tachyon.getCoordinates().x);
 
-        for(let line = 1; line < workload.grid.length; line++) {
+        for(let lineIndex = 1; lineIndex < workload.grid.length; lineIndex++) {
             const newBeams: number[] = [];
             const removeableBeams: number[] = [];
+            const line = workload.grid[lineIndex]; 
             for(const beam of beams) {
-                const cell = workload.grid[line][beam];
+                const cell = line[beam];
                 switch(cell.getType()) {
                     case CellType.EMPTY:
                         cell.setType(CellType.BEAM);
@@ -29,14 +30,14 @@ export class pt1Day7Controller {
                         result++;
                         removeableBeams.push(beam);
                         if(!cell.isLeftWall()) {
-                            const leftCell = workload.grid[line][beam - 1];
+                            const leftCell = line[beam - 1];
                             if(leftCell.getType() === CellType.EMPTY) {
                                 leftCell.setType(CellType.BEAM);
                                 newBeams.push(leftCell.getCoordinates().x);
                             }
                         }
                         if(!cell.isRightWall()) {
-                            const rightCell = workload.grid[line][beam + 1];
+                            const rightCell = line[beam + 1];
                             if(rightCell.getType() === CellType.EMPTY) {
                                 rightCell.setType(CellType.BEAM);
                                 newBeams.push(rightCell.getCoordinates().x);
@@ -81,11 +82,83 @@ export class pt2Day7Controller {
         const timer = new TrackPerformance(true, "Day 7, Part 2");
         const { fileName } = req.data;
         const workload = parseData(fileName);
-        let result = 0;
+        let result =  0;
+
+        let beams: Cell[] = [];
+        beams.push(workload.tachyon);
+
+        // Associate all the cells with their left or right side
+        for(let lineIndex = 1; lineIndex < workload.grid.length; lineIndex++) {
+            const line = workload.grid[lineIndex]; 
+            for(const beam of beams) {
+                if(beam.hasHitASplitter()) {
+                    continue;
+                }
+                const cell = line[beam.getCoordinates().x];
+                switch(cell.getType()) {
+                    case CellType.EMPTY:
+                        cell.setType(CellType.BEAM);
+                        break;
+                    case CellType.SPLITTER:
+                        beam.setSplitterHit(true);
+                        if(!cell.isLeftWall()) {
+                            const leftCell = line[beam.getCoordinates().x - 1];
+                            leftCell.setType(CellType.BEAM);
+                            beams.push(leftCell);
+                            beam.setLeftCell(leftCell);
+                        }
+                        if(!cell.isRightWall()) {
+                            const rightCell = line[beam.getCoordinates().x + 1];
+                            rightCell.setType(CellType.BEAM);
+                            beams.push(rightCell);
+                            beam.setRightCell(rightCell);
+                        }
+                        break;
+                }
+            }
+        }
+
+        result = recursivePathCount(workload.tachyon);
+
+        /* ######################## */
+        /* ### Draw the tree :) ### */
+        /* ######################## */
+
+        // for(const line of workload.grid) {
+        //     let lineString = "";
+        //     for(const cell of line) {
+        //         lineString += cell.getType();
+        //     }
+        //     console.log(lineString);
+        // }
 
         timer.end();
         req.reply(result.toString());
     }
+}
+
+// Implementation of DFS to count all paths
+export function recursivePathCount(cell: Cell): number {
+    if(!cell.getLeftCell() && !cell.getRightCell()) {
+        return 1;
+    }
+
+    if(cell.getCellPaths() > 0) {
+        return cell.getCellPaths();
+    }
+
+    let paths = 0;
+
+    if(cell.getLeftCell()) {
+        paths += recursivePathCount(cell.getLeftCell()!);
+    }
+    if(cell.getRightCell()) {
+        paths += recursivePathCount(cell.getRightCell()!);
+    }
+
+    cell.setCellPaths(paths);
+
+    return paths;
 }
 
 /* ########################## */
@@ -120,6 +193,13 @@ export class Cell {
     private rightWall: boolean;
     private topWall: boolean;
     private bottomWall: boolean;
+
+    private leftCell?: Cell;
+    private rightCell?: Cell
+
+    private splitterHit: boolean = false;
+
+    private cellPaths: number = 0;
 
     constructor(type: CellType, x: number, y: number, walls?: CellWalls) {
         this.type = type;
@@ -174,6 +254,38 @@ export class Cell {
 
     public isBottomWall(): boolean {
         return this.bottomWall;
+    }
+
+    public setSplitterHit(value: boolean): void {
+        this.splitterHit = value;
+    }
+
+    public hasHitASplitter(): boolean {
+        return this.splitterHit;
+    }
+
+    public setLeftCell(cell: Cell): void {
+        this.leftCell = cell;
+    }
+    
+    public setRightCell(cell: Cell): void {
+        this.rightCell = cell;
+    }
+
+    public getLeftCell(): Cell | undefined {
+        return this.leftCell;
+    }
+
+    public getRightCell(): Cell | undefined {
+        return this.rightCell;
+    }
+
+    public setCellPaths(paths: number): void {
+        this.cellPaths = paths;
+    }
+
+    public getCellPaths(): number {
+        return this.cellPaths;
     }
 
 }

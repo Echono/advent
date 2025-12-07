@@ -296,18 +296,18 @@ describe('Test of day 7 code', () => {
         expect(result).toBe(expectedResult);
     });
    
-    // it('should run part 1 action and return accumelated numbers using the operator in the bottom of each line using some of my input mixed with the original example', async () => {
-    //     const service = await cds.connect.to('advent2025');
-    //     const result = await service.send('day6pt1', {fileName: 'day6example2.txt'});
-    //     const expectedResult = "14763111";
-    //     expect(result).toBe(expectedResult);
-    // });
-   
-    // it('should run part 2 action and return accumelated numbers using the operator in the bottom of each line where the numbers are column seperated within the column', async () => {
-    //     const service = await cds.connect.to('advent2025');
-    //     const result = await service.send('day6pt2', {fileName: 'day6example.txt'});
-    //     const expectedResult = "3263827";
-    //     expect(result).toBe(expectedResult);
-    // });
+    it('should run part 2 action and return accumelated numbers using the operator in the bottom of each line where the numbers are column seperated within the column', async () => {
+        const service = await cds.connect.to('advent2025');
+        const result = await service.send('day7pt2', {fileName: 'day7example.txt'});
+        const expectedResult = "40";
+        expect(result).toBe(expectedResult);
+    });
+    
+    it('', async () => {
+        const service = await cds.connect.to('advent2025');
+        const result = await service.send('day7pt2', {fileName: 'day7example2.txt'});
+        const expectedResult = "8";
+        expect(result).toBe(expectedResult);
+    })
 
 });
