@@ -296,18 +296,54 @@ describe('Test of day 7 code', () => {
         expect(result).toBe(expectedResult);
     });
    
-    it('should run part 2 action and return accumelated numbers using the operator in the bottom of each line where the numbers are column seperated within the column', async () => {
+    it('should run part 2 action with normal example', async () => {
         const service = await cds.connect.to('advent2025');
         const result = await service.send('day7pt2', {fileName: 'day7example.txt'});
         const expectedResult = "40";
         expect(result).toBe(expectedResult);
     });
     
-    it('', async () => {
+    it('should run part 2 action with another example', async () => {
         const service = await cds.connect.to('advent2025');
         const result = await service.send('day7pt2', {fileName: 'day7example2.txt'});
         const expectedResult = "8";
         expect(result).toBe(expectedResult);
     })
+
+});
+
+describe('Test of day 8 code', () => {
+
+    it('should run part 1 action', async () => {
+        const service = await cds.connect.to('advent2025');
+        const result = await service.send('day8pt1', {fileName: 'day8example.txt', iterations: 10});
+        const expectedResult = "40";
+        expect(result).toBe(expectedResult);
+    });
+
+    it('should run part 2 action', async () => {
+        const service = await cds.connect.to('advent2025');
+        const result = await service.send('day8pt2', {fileName: 'day8example.txt'});
+        const expectedResult = "25272";
+        expect(result).toBe(expectedResult);
+    });
+
+});
+
+describe('Test of day 9 code', () => {
+
+    it('should run part 1 action', async () => {
+        const service = await cds.connect.to('advent2025');
+        const result = await service.send('day9pt1', {fileName: 'day9example.txt'});
+        const expectedResult = "50";
+        expect(result).toBe(expectedResult);
+    });
+
+    it('should run part 2 action', async () => {
+        const service = await cds.connect.to('advent2025');
+        const result = await service.send('day9pt2', {fileName: 'day9example.txt'});
+        const expectedResult = "24";
+        expect(result).toBe(expectedResult);
+    });
 
 });

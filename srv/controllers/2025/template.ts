@@ -2,6 +2,10 @@ import { OnEventHandler, Request } from "@sap/cds";
 import { parseFileToString } from "../../util/parser";
 import { TrackPerformance } from "../../util/performer";
 
+/* ##################################### */
+/* ######### Classes and Types ######### */
+/* ##################################### */
+
 /* ########################## */
 /* ######### PART 1 ######### */
 /* ########################## */

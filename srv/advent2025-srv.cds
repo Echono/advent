@@ -42,4 +42,16 @@ service advent2025 {
     action day7pt1(fileName: String) returns String;
     action day7pt2(fileName: String) returns String;
 
+    /* ######################### */
+    /* ######### DAY 8 ######### */
+    /* ######################### */
+    action day8pt1(fileName: String, iterations: String) returns String;
+    action day8pt2(fileName: String, iterations: String) returns String;
+
+    /* ######################### */
+    /* ######### DAY 9 ######### */
+    /* ######################### */
+    action day9pt1(fileName: String) returns String;
+    action day9pt2(fileName: String) returns String;
+
 }
